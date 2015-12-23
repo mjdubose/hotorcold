@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hot or Cold</title>
+</head>
+<body>
+
+<form><b>Guess a Temperature between 1 and 100</b><br>
+    <input type="text" name="fred">
+    <input type='button' onclick="go();" value="Guess">
+    <input type='button' onclick="resetgame();" value="Reset">
+
+</form>
+<div id="display"></div>
+<div id="guessesmade"></div>
+
+
+<script>
+    var randomNumber = Math.floor((Math.random() * 100) + 1);
+    var guess = "";
+    var guessNumber = 0;
+    var guessesMade = [];
+
+    function resetgame() {
+        console.log('reset called');
+        randomNumber = Math.floor((Math.random() * 100) + 1);
+        guessNumber = 0;
+        guessesMade = [];
+        document.getElementById('guessesmade').innerHTML = "";
+
+    }
+
+    function submit() {
+       var displayText = '';
+        if (guess === randomNumber) {
+            displayText = 'you got it on guess number:' + guessNumber;
+        }
+        else if (guess === undefined) {
+
+            displayText = 'Enter a Number';
+            return;
+        }
+        else if (guess > randomNumber) {
+            var filler ='';
+            if ((guess -50) > randomNumber )
+            {
+                filler = 'Much ';
+            }
+            displayText = filler + "Colder.  You've guessed " + guessNumber + " times.";
+        }
+        else if (guess < randomNumber) {
+            var filler ='';
+            if ((guess + 50) < randomNumber )
+            {
+                filler = 'Much ';
+            }
+            displayText = filler + "Hotter.  You've guessed " + guessNumber + " times.";
+        }
+        document.getElementById('display').innerHTML = displayText;
+        guessesMade.push(guess);
+
+        var guesstext = '';
+        for (var i = 0; i < guessesMade.length; i++) {
+            guesstext += guessesMade[i] + " ";
+        }
+
+
+        document.getElementById('guessesmade').innerHTML = guesstext;
+    }
+    function go() {
+        console.log(randomNumber);
+        guess = document.getElementsByName('fred').item(0).value;
+        guess = parseInt(guess, 10);
+        if (isNaN(guess)) {
+            return;
+        }
+        console.log(guessNumber++);
+        submit();
+
+    }
+</script>
+</body>
+</html>
